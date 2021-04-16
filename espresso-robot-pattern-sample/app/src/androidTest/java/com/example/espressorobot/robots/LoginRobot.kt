@@ -1,6 +1,5 @@
 package com.example.espressorobot.robots
 
-import com.example.espressorobot.BaseTestRobot
 import com.example.espressorobot.R
 
 fun loginAction(

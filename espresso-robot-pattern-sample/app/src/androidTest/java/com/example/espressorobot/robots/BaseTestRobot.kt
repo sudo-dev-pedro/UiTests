@@ -1,4 +1,4 @@
-package com.example.espressorobot
+package com.example.espressorobot.robots
 
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
@@ -7,6 +7,7 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.withId
+import com.example.espressorobot.TestUtils
 import com.jraska.falcon.FalconSpoonRule
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anything
@@ -17,9 +18,13 @@ import org.hamcrest.Matchers.anything
 open class BaseTestRobot {
 
     fun fillEditText(resId: Int, text: String): ViewInteraction =
-            onView(withId(resId)).perform(ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
+            onView(withId(resId)).perform(
+                    ViewActions.replaceText(text),
+                    ViewActions.closeSoftKeyboard()
+            )
 
-    fun clickButton(resId: Int): ViewInteraction = onView((withId(resId))).perform(ViewActions.click())
+    fun clickButton(resId: Int): ViewInteraction =
+            onView((withId(resId))).perform(ViewActions.click())
 
     fun textView(resId: Int): ViewInteraction = onView(withId(resId))
 
