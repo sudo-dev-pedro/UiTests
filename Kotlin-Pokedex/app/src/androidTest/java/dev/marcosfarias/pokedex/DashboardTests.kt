@@ -20,7 +20,9 @@ import dev.marcosfarias.pokedex.database.dao.PokemonDAO
 import dev.marcosfarias.pokedex.model.Pokemon
 import dev.marcosfarias.pokedex.robots.BaseRobot
 import dev.marcosfarias.pokedex.ui.dashboard.DashboardFragment
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -33,7 +35,7 @@ class DashboardTests : BaseRobot() {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-    private val context: Context = ApplicationProvider.getApplicationContext()
+    private val context: Context = InstrumentationRegistry.getInstrumentation().context
 
     lateinit var bundle: Bundle
     lateinit var navHost: TestNavHostController
@@ -88,8 +90,12 @@ class DashboardTests : BaseRobot() {
 
     @Test
     fun verifyPokemonData() {
-        runBlocking {
+        runBlocking(Dispatchers.IO) {
             database.pokemonDAO().add(listOf(pokemon))
+
+            withContext(Dispatchers.Main) {
+                verifyPokemonData()
+            }
         }
 
         onView(
